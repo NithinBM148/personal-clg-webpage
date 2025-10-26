@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Home</title>
+
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+            --bg-1: #f6f9ff;
+            --bg-2: #e8f0ff;
+            --card: rgba(255,255,255,0.85);
+            --accent: #3b82f6; /* blue */
+            --accent-2: #7c3aed; /* purple */
+            --text: #07203b;
+            --muted: #5b6b7a;
+        }
+
+        * { box-sizing: border-box; }
+        html,body{
+            height:100%;
+            margin:0;
+            font-family: "Poppins", Arial, sans-serif;
+            background: linear-gradient(135deg,var(--bg-1) 0%, var(--bg-2) 100%);
+            color:var(--text);
+        }
+
+        .wrap{
+            max-width: 1000px;
+            margin: 36px auto;
+            padding: 28px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        /* left card with logo */
+        .card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 8px 30px rgba(11,35,78,0.08);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(11,61,145,0.06);
+        }
+
+        .logo {
+            width: 100%;
+            height: 320px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-radius: 12px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(124,58,237,0.04));
+        }
+
+        .logo img{
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 5%;
+            box-shadow: 0 8px 30px rgba(11,61,145,0.12);
+            border: 6px solid rgba(255,255,255,0.6);
+            background: white;
+        }
+
+        /* main content */
+        .content {
+            background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.92));
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 10px 40px rgba(11,35,78,0.06);
+            border: 1px solid rgba(11,61,145,0.06);
+        }
+
+        .title {
+            display:flex;
+            align-items:center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin: 0;
+            color: var(--text);
+            letter-spacing: -0.2px;
+        }
+
+        .pill {
+            display:inline-block;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-weight:600;
+            color: white;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            box-shadow: 0 6px 18px rgba(59,130,246,0.18);
+            font-size: 13px;
+        }
+
+        p.lead {
+            color: var(--muted);
+            line-height: 1.6;
+            margin: 16px 0 22px 0;
+            font-size: 16px;
+        }
+
+        .meta {
+            display:grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px 18px;
+            margin-bottom: 22px;
+        }
+
+        .meta .item {
+            background: rgba(11,61,145,0.03);
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            color: var(--text);
+        }
+        .meta .label { font-weight:600; display:block; margin-bottom:6px; color: var(--accent); }
+
+        .links-row {
+            display:flex;
+            gap:12px;
+            flex-wrap:wrap;
+            align-items:center;
+        }
+
+        .btn {
+            padding:10px 18px;
+            border-radius: 12px;
+            font-weight:600;
+            cursor:pointer;
+            border: none;
+            color: white;
+            text-decoration: none;
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            transition: transform .12s ease, box-shadow .12s ease;
+        }
+
+        .btn-ug { background: linear-gradient(90deg,#06b6d4,#3b82f6); box-shadow: 0 8px 24px rgba(3,105,161,0.12); }
+        .btn-pg { background: linear-gradient(90deg,#f97316,#f43f5e); box-shadow: 0 8px 24px rgba(244,63,94,0.12); }
+        .btn-wiki { background: transparent; border: 1px solid rgba(11,61,145,0.12); color: var(--accent); padding:8px 14px; border-radius:10px; font-weight:600; }
+
+        .btn:hover { transform: translateY(-4px); }
+
+        a.wiki-link { color:var(--accent); text-decoration: none; font-weight:600; }
+
+        footer.note {
+            margin-top: 18px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        /* modal styles */
+        .modal-backdrop{
+          position:fixed;inset:0;background:rgba(3,37,65,0.45);display:none;align-items:center;justify-content:center;z-index:9999;
+        }
+        .modal{
+          width:100%;max-width:520px;background:white;border-radius:12px;padding:18px;box-shadow:0 20px 50px rgba(3,37,65,0.2);border:1px solid rgba(11,61,145,0.06);
+        }
+        .modal h2{margin:0 0 8px 0;font-size:18px;color:var(--text)}
+        .modal p{margin:0 0 12px 0;color:var(--muted)}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+        .form-row.single{grid-template-columns:1fr}
+        .modal input{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(11,61,145,0.1);font-size:14px}
+        .modal .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+        .modal .btn{padding:8px 12px;font-size:14px}
+        .modal .note{font-size:13px;color:var(--muted);margin-top:8px}
+
+        /* make the list more readable on small screens */
+        @media (max-width: 480px) {
+            body { padding: 12px; }
+            ol, a { font-size: 16px; }
+            .form-row{grid-template-columns:1fr}
+            .logo { height: 220px; }
+        }
+        /* responsive */
+        @media (max-width: 880px){
+            .wrap{ grid-template-columns: 1fr; padding: 20px; }
+            .logo { height: 260px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="card" aria-hidden="false">
+            <div class="logo">
+                <img src="./svcelogo.jpg" alt="SVCE Logo">
+            </div>
+            <div style="margin-top:14px; text-align:center;">
+                <div class="pill">Established 2001</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="title">
+                <h1>Sri Venkateshwara College of Engineering</h1>
+                <div class="pill">Bengaluru</div>
+            </div>
+
+            <p class="lead">
+                Sri Venkateshwara College of Engineering is a private engineering college near Chikkajala, Vidyanagar about 22 km from Bangalore on National Highway No.7. Approved by AICTE and affiliated to VTU.
+            </p>
+
+            <div class="meta" role="list">
+                <div class="item" role="listitem">
+                    <span class="label">Address</span>
+                    Kempegowda International Airport Rd, Vidya Nagar, Bengaluru, Karnataka 562157
+                </div>
+                <div class="item" role="listitem">
+                    <span class="label">Founded</span>
+                    2001
+                </div>
+                <div class="item" role="listitem">
+                    <span class="label">Principal</span>
+                    Dr. B M Satish
+                </div>
+                <div class="item" role="listitem">
+                    <span class="label">Phone</span>
+                    099167 75988
+                </div>
+            </div>
+
+            <div class="links-row">
+                <!-- data-target used by JS modal -->
+                <a id="ugBtn" class="btn btn-ug" href="ug.html" data-target="ug.html">UG Admissions</a>
+                <a id="pgBtn" class="btn btn-pg" href="pg.html" data-target="pg.html">PG Admissions</a>
+                <a class="btn btn-wiki" href="https://en.wikipedia.org/wiki/Sri_Venkateshwara_College_of_Engineering,_Bengaluru" target="_blank" rel="noopener noreferrer">View on Wikipedia</a>
+            </div>
+
+            <footer class="note">
+                Tip: Use the UG/PG buttons to view program details. The page is responsive and works on mobile.
+            </footer>
+        </div>
+    </div>
+
+    <!-- Contact modal -->
+    <div id="contactModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="modal" role="document" aria-labelledby="modalTitle">
+        <h2 id="modalTitle">Quick contact to proceed</h2>
+        <p>Please enter your name and email so we can contact you about admissions. You will be redirected after submission.</p>
+
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <input type="text" id="visitorName" name="name" placeholder="Full name" autocomplete="name" required>
+            <input type="tel" id="visitorPhone" name="phone" placeholder="Phone (optional)" autocomplete="tel">
+          </div>
+          <div class="form-row single">
+            <input type="email" id="visitorEmail" name="email" placeholder="Email address (required)" autocomplete="email" required>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" id="modalCancel" class="btn" style="background:#e6eaf6;color:#07203b;border-radius:8px">No thanks</button>
+            <button type="submit" id="modalSubmit" class="btn btn-ug">Submit & continue</button>
+          </div>
+
+          <div class="note">We only store this info locally on your browser for demo. Replace storage logic with your backend endpoint when ready.</div>
+        </form>
+      </div>
+    </div>
+
+
+<script>
+  (function(){
+    // ...existing variables and helpers...
+    const CAPTURE_KEY = 'svceContactCaptured';
+
+    // submit handler (replace your existing one)
+    form.addEventListener('submit', async function(e){
+      e.preventDefault();
+      const name = document.getElementById('visitorName').value.trim();
+      const phone = document.getElementById('visitorPhone').value.trim();
+      const email = document.getElementById('visitorEmail').value.trim().toLowerCase();
+
+      if(!email || !validEmail(email)){
+        alert('Please enter a valid email address.');
+        document.getElementById('visitorEmail').focus();
+        return;
+      }
+
+      // try sending to server
+      try {
+        const res = await fetch('/api/contacts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, phone, email, page: targetUrl || location.pathname })
+        });
+        if (!res.ok) throw new Error('server');
+        // mark as captured so modal won't repeat
+        localStorage.setItem(CAPTURE_KEY, '1');
+      } catch(err){
+        console.warn('Server save failed, falling back to localStorage', err);
+        // fallback: store locally (optional)
+        try {
+          const existing = JSON.parse(localStorage.getItem('svceContacts') || '[]');
+          existing.push({ name, phone, email, page: targetUrl, time: new Date().toISOString() });
+          localStorage.setItem('svceContacts', JSON.stringify(existing));
+          localStorage.setItem(CAPTURE_KEY, '1');
+        } catch(e){}
+      }
+
+      closeModal();
+      if(targetUrl) window.location.href = targetUrl;
+    });
+    // ...rest unchanged...
+  })();
+</script>
+</body>
+</html>

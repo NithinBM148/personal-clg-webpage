@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Visitor Details</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #f8f9fa; }
+        .refresh { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .refresh:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Visitor Details</h1>
+        <button class="refresh" onclick="loadContacts()">Refresh Data</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Page</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody id="contactsTable"></tbody>
+        </table>
+    </div>
+
+    <script>
+        async function loadContacts() {
+            try {
+                const response = await fetch('/api/contacts');
+                if (!response.ok) throw new Error('Failed to fetch');
+                const contacts = await response.json();
+                
+                const tbody = document.getElementById('contactsTable');
+                tbody.innerHTML = '';
+                
+                contacts.forEach(contact => {
+                    const row = tbody.insertRow();
+                    row.insertCell().textContent = contact.name || '-';
+                    row.insertCell().textContent = contact.email || '-';
+                    row.insertCell().textContent = contact.phone || '-';
+                    row.insertCell().textContent = contact.page || '-';
+                    row.insertCell().textContent = new Date(contact.timestamp).toLocaleString();
+                });
+            } catch (error) {
+                alert('Error loading contacts. Please check your authentication.');
+            }
+        }
+
+        loadContacts();
+    </script>
+</body>
+</html>
